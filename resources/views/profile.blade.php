@@ -34,7 +34,7 @@
                         <!-- Nama -->
                         <div>
                             <label class="text-sm font-medium text-gray-700">Nama:</label>
-                            <input type="text" name="name" class="w-full mt-1 border rounded px-4 py-2" value="{{ $user->name }}" required>
+                            <input type="text" name="name" class="w-full mt-1 border rounded px-4 py-2" value="{{ $user->name }}" readonly>
                         </div>
 
                         <!-- Tanggal Lahir -->

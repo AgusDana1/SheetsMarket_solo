@@ -28,9 +28,9 @@
 
         @auth
             {{-- User Profile --}}
-            <div class="relative">
+            <div class="relative" id="profile-container"> 
                 <button class="relative flex items-center focus:outline-none" id="profile-button">
-                    <img class="w-10 h-10 rounded-full border-2 border-gray-300" src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('default.png') }}" alt="User Avatar">
+                    <img class="w-10 h-10 rounded-full border-2 border-gray-300" src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('default.png') }}" alt="User">
                 </button>
                 <div class="absolute right-0 mt-2 bg-white shadow-lg rounded-md hidden" id="profile-dropdown">
                     <a href="{{ route('profile') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
@@ -85,10 +85,22 @@
         lastScrollTop = scrollTop;
     });
 
-    document.getElementById('profile-button').addEventListener('click', function () {
+    const profileContainer = document.getElementById('profile-container');
+
+    // profile dropdown
+    document.getElementById('profile-button').addEventListener('click', function (e) {
         const dropdown = document.getElementById('profile-dropdown');
+        event.stopPropagation();
         dropdown.classList.toggle('hidden');
     });
+
+    // profile hidden dropdown if user clicked out from area dropdown
+    document.addEventListener('click', function (e) {
+        if (!profileContainer.contains(event.target)) {
+            const dropdown = document.getElementById('profile-dropdown');
+            dropdown.classList.add('hidden');
+        }
+    })
 
     document.querySelectorAll('#profile-dropdown a').forEach(link => {
         link.addEventListener('click', function () {
